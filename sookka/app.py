@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
-import request
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, render_template, request
+from passlib.hash import sha256_crypt
 from wtforms import Form, PasswordField, StringField, validators
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def hello():
