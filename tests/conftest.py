@@ -20,3 +20,9 @@ def test_client():
     yield testing_client
 
     ctx.pop()
+
+
+@pytest.fixture
+def firefox_options(firefox_options):
+    firefox_options.headless = True
+    return firefox_options
