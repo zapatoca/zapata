@@ -2,3 +2,4 @@
 .vscode/*
 .vagrant/*
 **/__pycache__/*
+*.log
