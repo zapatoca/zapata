@@ -8,10 +8,7 @@ from flask import url_for
 class TestLiveServer():
 
     @pytest.mark.parametrize('page', [
-        'home',
-        'contact',
-        'about',
-        'services'
+        'home'
     ])
     def test_server_is_up_and_running(self, selenium, page):
         selenium.get(url_for(page, _external=True))
