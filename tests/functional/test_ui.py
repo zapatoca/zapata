@@ -10,7 +10,7 @@ class TestLiveServer():
     @pytest.mark.parametrize('page', [
         'home'
     ])
-    def test_server_is_up_and_running(self, selenium, page):
+    def test_title(self, selenium, page):
         selenium.get(url_for(page, _external=True))
         assert selenium.title == 'Zapata'
 
