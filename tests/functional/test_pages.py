@@ -5,10 +5,7 @@ import pytest
 
 @pytest.mark.parametrize('page', [
     '/',
-    '/home',
-    '/contact',
-    '/about',
-    '/services'
+    '/home'
 ])
 def test_page(client, page):
     response = client.get(page)
