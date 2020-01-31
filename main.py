@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 
 
-from zapata import create_app
-from zapata.routes import configure_routes
+import logging
+
+from project import create_app, create_db
+from project.routes import configure_routes
+
+logging.basicConfig(filename='zapata.log', level=logging.DEBUG)
 
 app = create_app()
+db = create_db(app)
 
-configure_routes(app)
+configure_routes(app, db)

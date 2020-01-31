@@ -1,3 +1,4 @@
 Flask
 wtforms
 passlib
+flask_mysqldb

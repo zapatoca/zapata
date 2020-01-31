@@ -2,8 +2,8 @@
 
 import pytest
 
-from zapata import create_app
-from zapata.routes import configure_routes
+from project import create_app, create_db
+from project.routes import configure_routes
 
 
 @pytest.fixture
@@ -15,5 +15,6 @@ def firefox_options(firefox_options):
 @pytest.fixture
 def app():
     app = create_app()
-    configure_routes(app)
+    db = create_db(app)
+    configure_routes(app, db)
     return app

@@ -22,11 +22,11 @@ class TestLiveServer():
         selenium.find_element_by_class_name('navbar-brand').click()
         assert selenium.current_url == url_for(page, _external=True)
 
-    @pytest.mark.parametrize('test_input, expected', [
-        ('', '?email=&subscribe=Subscribe#')
+    @pytest.mark.parametrize('test_input', [
+        ('kuku@stam.com')
     ])
-    def test_subscribe(self, selenium, test_input, expected):
+    def test_new_subscriber(self, selenium, test_input):
         selenium.get(url_for('home', _external=True))
+        selenium.find_element_by_id('email').send_keys(test_input)
         selenium.find_element_by_class_name('main-button').click()
-        assert selenium.current_url == \
-            url_for('home', _external=True) + expected
+        assert selenium.current_url == url_for('home', _external=True)+'#'
