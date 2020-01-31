@@ -1,23 +1,22 @@
 #!/usr/bin/env python3
 
-from flask import render_template
+from flask import redirect, render_template, request, url_for
+from wtforms import Form, StringField
+from wtforms.validators import DataRequired, Email
 
 
 def configure_routes(app):
 
-    @app.route('/')
-    @app.route('/home')
+    class SubscribeForm(Form):
+        email = StringField('Email', validators=[DataRequired(), Email()])
+
+    @app.route('/', methods=['GET', 'POST'])
+    @app.route('/home', methods=['GET', 'POST'])
     def home():
-        return render_template('index.html')
+        form = SubscribeForm(request.form)
 
-    @app.route('/about')
-    def about():
-        return render_template('about.html')
+        if request.method == 'POST' and form.validate():
+            # email = form.email.data
+            return(redirect(url_for('home')))
 
-    @app.route('/services')
-    def services():
-        return render_template('services.html')
-
-    @app.route('/contact')
-    def contact():
-        return render_template('contact.html')
+        return render_template('index.html', form=form)
