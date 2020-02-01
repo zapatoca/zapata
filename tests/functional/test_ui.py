@@ -29,4 +29,6 @@ class TestLiveServer():
         selenium.get(url_for('home', _external=True))
         selenium.find_element_by_id('email').send_keys(test_input)
         selenium.find_element_by_class_name('main-button').click()
-        assert selenium.current_url == url_for('home', _external=True)+'#'
+        assert selenium.current_url == url_for('home', _external=True)
+        assert selenium.find_element_by_id(
+            'email').get_attribute('value') == ""
