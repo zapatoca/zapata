@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import render_template, request
+from flask import redirect, render_template, request, url_for
 from wtforms import Form, StringField
 from wtforms.validators import DataRequired, Email
 
@@ -19,6 +19,7 @@ def configure_routes(app, db):
             app.logger.info('New subscriber %s', form.email.data)
 
             add_subscriber(app, db, form.email.data)
+            return(redirect(url_for('home')))
 
         return render_template('index.html', form=form)
 
