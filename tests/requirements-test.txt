@@ -2,3 +2,4 @@ pytest
 selenium
 pytest-selenium
 pytest-flask
+pytest-mysql

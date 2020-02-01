@@ -43,12 +43,17 @@ https://templatemo.com/tm-541-host-cloud
           <div class="header-text caption">
             <h2>Sorry for the dust!<br>We know it’s taking a while but sit tight and we’ll be with you soon.</h2>
             <div id="search-section">
-              <form id="suggestion_form" name="gs" method="get" action="#">
+              <form id="suggestion_form" name="gs" method="POST" action="#">
+                {% from "includes/_formhelpers.html" import render_field %}
                 <div class="searchText">
-                  <input type="text" name="email" class="searchText" placeholder="Enter your email here..."
+                  {{ render_field(form.email, class_="searchText", placeholder="Enter your email here...", autocomplete="off") }}
+                </div>
+                <input type="submit" class="main-button" value="Subscribe">
+                <!-- <div class="searchText">
+                  <input type="text" id="email" name="email" class="searchText" placeholder="Enter your email here..."
                     autocomplete="off">
                 </div>
-                <input type="submit" name="subscribe" class="main-button" value="Subscribe">
+                <input type="submit" name="subscribe" class="main-button" value="Subscribe"> -->
               </form>
             </div>
           </div>
