@@ -7,4 +7,5 @@ Vagrant.configure("2") do |config|
     path:"bootstrap-app.sh",
     env: {"GUEST_HOME" => "/vagrant"}
   config.vm.network "forwarded_port", guest: 5000, host: 5000 
+  config.vm.network "forwarded_port", guest: 3306, host: 3306 
 end
