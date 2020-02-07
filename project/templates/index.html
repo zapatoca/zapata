@@ -18,21 +18,28 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/fontawesome.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/templatemo-host-cloud.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/owl.css') }}">
-  <!--
 
-Host Cloud Template
+  <script>
+    setTimeout(function () {
+      var alert = document.querySelector('.alert')
+      if (alert) {
+        alert.remove();
+      }
+    }, 2000);
+  </script>
 
-https://templatemo.com/tm-541-host-cloud
-
--->
 </head>
 
 <body>
 
   <!-- Header -->
-  <header class="">
+  <header>
     {% include 'includes/_navbar.html' %}
+    <div class="container ">
+      {% include 'includes/_messages.html' %}
+    </div>
   </header>
+
 
   <!-- Page Content -->
   <!-- Banner Starts Here -->
@@ -49,11 +56,6 @@ https://templatemo.com/tm-541-host-cloud
                   {{ render_field(form.email, class_="searchText", placeholder="Enter your email here...", autocomplete="off") }}
                 </div>
                 <input type="submit" class="main-button" value="Subscribe">
-                <!-- <div class="searchText">
-                  <input type="text" id="email" name="email" class="searchText" placeholder="Enter your email here..."
-                    autocomplete="off">
-                </div>
-                <input type="submit" name="subscribe" class="main-button" value="Subscribe"> -->
               </form>
             </div>
           </div>

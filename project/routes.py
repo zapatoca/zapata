@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for
 from wtforms import Form, StringField
 from wtforms.validators import DataRequired, Email
 
@@ -33,6 +33,7 @@ def add_subscriber(app, db, email):
         )
         db.connection.commit()
         cur.close()
+        flash('You are now subscribed', 'success')
 
     except Exception as e:
         app.logger.info(e)
