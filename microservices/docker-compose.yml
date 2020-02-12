@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  vault:
+    image: vault:1.3.2
+    container_name: vault
+    ports:
+      - 8200:8200
+    volumes:
+      - type: bind
+        source: ./vault
+        target: /vault/config
+    environment:
+      - VAULT_ADDR=http://localhost:8200
+    cap_add:
+      - IPC_LOCK
+    command: server
+    restart: always
