@@ -23,8 +23,11 @@ Vagrant.configure("2") do |config|
   config.vm.provision :docker
   config.vm.provision :docker_compose, 
     compose_version: "1.25.4", 
-    yml: "/vagrant/microservices/docker-compose.yml", 
-    run: "always"
+    yml: [
+      "/vagrant/microservices/docker-compose.yml"
+    ],
+    run: "always",
+    env: {"GUEST_HOME" => "/vagrant"}
 
   config.vm.define "dev" do |dev|
     dev.vm.box = "hashicorp/bionic64"
