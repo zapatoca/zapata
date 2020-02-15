@@ -15,21 +15,22 @@ services:
       - IPC_LOCK
     command: server
     restart: always
-  bootstrap-vault:
+  initvault:
     image: vault:1.3.2
-    container_name: bootstrap-vault
+    container_name: initvault
     environment:
       - VAULT_ADDR=http://vault:8200
     volumes:
       - ./wait-for-it.sh:/usr/local/bin/wait-for-it.sh
+      - ./vault/vault-init.sh:/usr/local/bin/vault-init.sh
+      - ./vault:/vault
     command:
       [
         "/usr/local/bin/wait-for-it.sh",
         "vault:8200",
         "--",
-        "vault",
-        "operator",
-        "init",
+        "/usr/local/bin/vault-init.sh",
       ]
     depends_on:
       - vault
+    user: "0"
