@@ -3,7 +3,7 @@
 GUEST_HOME=${GUEST_HOME:='.'}
 
 sleep 30
-MYSQL_PASSWORD=$(/vagrant/microservices/read_secret.py)
+MYSQL_PASSWORD=$(cd /vagrant && python3 -c "from python_modules.secrets import get_secret; print(get_secret('mysql/password'))")
 debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_PASSWORD"
 debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_PASSWORD"
 

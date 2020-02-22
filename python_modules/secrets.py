@@ -5,7 +5,7 @@ import json
 import requests
 
 
-def main():
+def get_secret(key):
     with open('/vagrant/microservices/vault/vaultkeys', 'r') as vaultkeys:
         f = json.loads(vaultkeys.read())
         token = f['root_token']
@@ -18,11 +18,7 @@ def main():
             data='{{"key": "{key}"}}'.format(key=keys[0])
         )
     response = requests.get(
-        url='http://localhost:8200/v1/kv/data/secret/mysql/password',
+        url='http://localhost:8200/v1/kv/data/secret/{key}'.format(key=key),
         headers=headers
     )
-    print(json.loads(response.content)['data']['data']['key'])
-
-
-if __name__ == "__main__":
-    main()
+    return json.loads(response.content)['data']['data']['key']
