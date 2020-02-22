@@ -17,6 +17,19 @@ def get_token():
         return json.load(vaultkeys)['root_token']
 
 
+def import_secrets(client):
+    client.secrets.kv.v2.create_or_update_secret(
+        path='secret/mysql/password',
+        secret=dict(key=os.getenv('MYSQL_PASSWORD')),
+        mount_point='kv'
+    )
+    client.secrets.kv.v2.create_or_update_secret(
+        path='secret/mailchimp/apikey',
+        secret=dict(key=os.getenv('MAILCHIMP_APIKEY')),
+        mount_point='kv'
+    )
+
+
 def main():
     load_dotenv(dotenv_path='/.env')
     client = hvac.Client(url='http://vault:8200')
@@ -33,11 +46,7 @@ def main():
         path='kv',
         options=dict(version=2),
     )
-    client.secrets.kv.v2.create_or_update_secret(
-        path='secret/mysql/password',
-        secret=dict(key=os.getenv('MYSQL_PASSWORD')),
-        mount_point='kv'
-    )
+    import_secrets(client)
     os.system('chown -R 1000:0 /vault')
 
 
