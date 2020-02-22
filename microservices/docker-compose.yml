@@ -6,9 +6,7 @@ services:
     ports:
       - 8200:8200
     volumes:
-      - type: bind
-        source: ./vault
-        target: /vault/config
+      - ./vault:/vault
     environment:
       - VAULT_ADDR=http://localhost:8200
     cap_add:
@@ -22,8 +20,11 @@ services:
       - VAULT_ADDR=http://vault:8200
     volumes:
       - ./wait-for-it.sh:/usr/local/bin/wait-for-it.sh
-      - ./vault/vault-init.sh:/usr/local/bin/vault-init.sh
+      - ./vault-init.sh:/usr/local/bin/vault-init.sh
+      - ./vault-init.py:/usr/local/bin/vault-init.py
       - ./vault:/vault
+      - ./.env:/.env
+      - ./requirements.lock:/requirements.lock
     command:
       [
         "/usr/local/bin/wait-for-it.sh",

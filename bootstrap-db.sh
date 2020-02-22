@@ -2,8 +2,10 @@
 
 GUEST_HOME=${GUEST_HOME:='.'}
 
-debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
-debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
+sleep 30
+MYSQL_PASSWORD=$(/vagrant/microservices/read_secret.py)
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_PASSWORD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_PASSWORD"
 
 apt-get update
 apt-get install -y mysql-server libmysqlclient-dev
