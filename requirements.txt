@@ -2,3 +2,4 @@ Flask
 wtforms
 passlib
 flask_mysqldb
+mailchimp3
