@@ -24,8 +24,18 @@ def import_secrets(client):
         mount_point='kv'
     )
     client.secrets.kv.v2.create_or_update_secret(
+        path='secret/mailchimp/username',
+        secret=dict(key=os.getenv('MAILCHIMP_USERNAME')),
+        mount_point='kv'
+    )
+    client.secrets.kv.v2.create_or_update_secret(
         path='secret/mailchimp/apikey',
         secret=dict(key=os.getenv('MAILCHIMP_APIKEY')),
+        mount_point='kv'
+    )
+    client.secrets.kv.v2.create_or_update_secret(
+        path='secret/mailchimp/listid',
+        secret=dict(key=os.getenv('MAILCHIMP_LISTID')),
         mount_point='kv'
     )
 

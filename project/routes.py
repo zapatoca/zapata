@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
 from flask import flash, redirect, render_template, request, url_for
+from mailchimp3 import MailChimp
 from wtforms import Form, StringField
 from wtforms.validators import DataRequired, Email
+
+from project.python_modules.secrets import get_secret
 
 
 def configure_routes(app, db):
@@ -33,6 +36,17 @@ def add_subscriber(app, db, email):
         )
         db.connection.commit()
         cur.close()
+        client = MailChimp(
+            mc_api=get_secret('mailchimp/apikey'),
+            mc_user=get_secret('mailchimp/username')
+        )
+        client.lists.members.create(
+            get_secret('mailchimp/listid'),
+            {
+                'email_address': '{email}'.format(email=email),
+                'status': 'subscribed'
+            }
+        )
         flash('You are now subscribed', 'success')
 
     except Exception as e:
