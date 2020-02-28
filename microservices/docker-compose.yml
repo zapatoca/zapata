@@ -19,19 +19,12 @@ services:
     environment:
       - VAULT_ADDR=http://vault:8200
     volumes:
-      - ./wait-for-it.sh:/usr/local/bin/wait-for-it.sh
       - ./vault-init.sh:/usr/local/bin/vault-init.sh
       - ./vault-init.py:/usr/local/bin/vault-init.py
       - ./vault:/vault
       - ./.env:/.env
       - ./requirements.lock:/requirements.lock
-    command:
-      [
-        "/usr/local/bin/wait-for-it.sh",
-        "vault:8200",
-        "--",
-        "/usr/local/bin/vault-init.sh",
-      ]
+    command: /usr/local/bin/vault-init.sh
     depends_on:
       - vault
     user: "0"
