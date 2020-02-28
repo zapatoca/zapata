@@ -1,3 +1,5 @@
+![Python application](https://github.com/zapatoca/zapata/workflows/Python%20application/badge.svg)
+
 # zapata
 
 ## Spin DEV environment
