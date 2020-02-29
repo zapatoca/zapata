@@ -2,8 +2,10 @@
 
 import json
 import os
+import time
 
 import hvac
+import requests
 from dotenv import load_dotenv
 
 
@@ -42,6 +44,8 @@ def import_secrets(client):
 
 def main():
     load_dotenv(dotenv_path='/.env')
+    while (requests.get(url='http://vault:8200').status_code != 200):
+        time.sleep(10)
     client = hvac.Client(url='http://vault:8200')
     if os.path.exists("/vault/vaultkeys"):
         os.remove("/vault/vaultkeys")
