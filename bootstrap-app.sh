@@ -3,7 +3,7 @@
 GUEST_HOME=${GUEST_HOME:='.'}
 
 apt-get update
-apt-get install -y python3-pip python3-setuptools
+apt-get install -y python3-pip python3-setuptools mysql-client libmysqlclient-dev
 
 pip3 install -r $GUEST_HOME/requirements.lock
 
