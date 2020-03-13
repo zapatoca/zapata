@@ -19,10 +19,7 @@ Vagrant.configure("2") do |config|
     compose_version: "1.25.4", 
     yml: "/vagrant/microservices/docker-compose.yml",
     run: "always",
-    env: {"GUEST_HOME" => "/vagrant"}
-  config.vm.provision "shell", 
-    path:"bootstrap-db.sh", 
-    env: {"GUEST_HOME" => "/vagrant"}
+    env: { "GUEST_HOME" => "/vagrant"}
   config.vm.provision "shell", 
     path:"bootstrap-app.sh",
     env: {"GUEST_HOME" => "/vagrant"}
