@@ -3,9 +3,9 @@
 import MySQLdb
 import pytest
 
-from project import create_app, create_db
-from project.python_modules.secrets import get_secret
+from project.create import create_app, create_db
 from project.routes import configure_routes
+from project.secrets import get_secret
 
 
 @pytest.fixture

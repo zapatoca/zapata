@@ -35,13 +35,11 @@ services:
     container_name: db
     environment:
       - MYSQL_DATABASE=zapata
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD
       - MYSQL_ROOT_HOST=%
     ports:
       - 3306:3306
     volumes:
       - ./db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
       - ./db/my.cnf:/etc/mysql/my.cnf
-    depends_on:
-      - vault-client
     restart: always
