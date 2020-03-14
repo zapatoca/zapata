@@ -4,15 +4,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-pytest_plugins = ["docker_compose"]
 
-
-def test_title(selenium, session_scoped_container_getter):
+def test_title(selenium):
     selenium.get('http://localhost:8200')
     assert selenium.title == 'Vault'
 
 
-def test_vault_initialized(selenium, session_scoped_container_getter):
+def test_vault_initialized(selenium):
     selenium.get('http://localhost:8200')
     try:
         WebDriverWait(selenium, 10).until(

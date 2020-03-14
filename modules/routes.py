@@ -5,7 +5,7 @@ from mailchimp3 import MailChimp
 from wtforms import Form, StringField
 from wtforms.validators import DataRequired, Email
 
-from project.secrets import get_secret
+from modules.secrets import get_secret
 
 
 def configure_routes(app, db):
@@ -37,11 +37,11 @@ def add_subscriber(app, db, email):
         db.connection.commit()
         cur.close()
         client = MailChimp(
-            mc_api=get_secret('mailchimp/apikey'),
-            mc_user=get_secret('mailchimp/username')
+            mc_api=get_secret('vault-server', 'mailchimp/apikey'),
+            mc_user=get_secret('vault-server', 'mailchimp/username')
         )
         client.lists.members.create(
-            get_secret('mailchimp/listid'),
+            get_secret('vault-server', 'mailchimp/listid'),
             {
                 'email_address': '{email}'.format(email=email),
                 'status': 'subscribed'

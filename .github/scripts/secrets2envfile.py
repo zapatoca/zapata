@@ -4,7 +4,7 @@ import os
 
 
 def main():
-    with open('microservices/.env', 'w') as envfile:
+    with open('./services/vault/.env', 'w') as envfile:
         envfile.write(
             'MYSQL_PASSWORD='+os.getenv('MYSQL_PASSWORD')+'\n'
         )

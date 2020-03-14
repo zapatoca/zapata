@@ -24,19 +24,17 @@ jobs:
         run: sudo service mysql stop
       - name: Build the docker-compose stack
         run: |
-          docker-compose -f microservices/docker-compose.yml up -d \
+          docker-compose -f docker-compose.yml up -d \
             vault-server vault-client
           export GUEST_HOME="${GITHUB_WORKSPACE}"
-          ./docker-compose-wrapper.sh
-      - name: Bootstrap
-        run: |
-          export GUEST_HOME="${GITHUB_WORKSPACE}"
-          sudo -E ./bootstrap-app.sh
+          sudo -E ./docker-compose-wrapper.sh
       - name: Install dependencies
         run: |
+          sudo apt-get install -y mysql-client libmysqlclient-dev
           python -m pip install --upgrade pip
-          pip install -r requirements.lock
-          pip install -r tests/requirements-test.lock
+          pip install -r requirements.txt
+          pip install -r services/app/requirements.txt
+          pip install -r tests/requirements-test.txt
           wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
           mkdir geckodriver
           tar -xzf geckodriver-v0.26.0-linux64.tar.gz -C geckodriver

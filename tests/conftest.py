@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
+import os
+
 import MySQLdb
 import pytest
 
-from project.create import create_app, create_db
-from project.routes import configure_routes
-from project.secrets import get_secret
+from modules.secrets import get_secret
 
 
 @pytest.fixture
@@ -15,17 +15,19 @@ def firefox_options(firefox_options):
 
 
 @pytest.fixture
-def app():
-    app = create_app()
-    db = create_db(app)
-    configure_routes(app, db)
-    return app
-
-
-@pytest.fixture
 def mysql():
+    print(get_secret('localhost', 'mysql/password'))
     return MySQLdb.connect(
         host="127.0.0.1",
         user="root",
-        passwd=get_secret('mysql/password')
+        passwd=get_secret('localhost', 'mysql/password')
     )
+
+
+@pytest.fixture(autouse=True)
+def env_setup(monkeypatch):
+    if os.getenv("GITHUB_ACTIONS"):
+        guest_home = os.getenv("GITHUB_WORKSPACE")
+    else:
+        guest_home = '/Users/liora/src/github.com/lioramilbaum/zapata'
+    monkeypatch.setenv('GUEST_HOME', guest_home)
