@@ -3,7 +3,7 @@
 
 import logging
 
-from project import create_app, create_db
+from project.create import create_app, create_db
 from project.routes import configure_routes
 
 logging.basicConfig(filename='zapata.log', level=logging.DEBUG)

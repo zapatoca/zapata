@@ -24,8 +24,10 @@ jobs:
         run: sudo service mysql stop
       - name: Build the docker-compose stack
         run: |
-          cd ${GITHUB_WORKSPACE}/microservices
-          docker-compose up -d
+          docker-compose -f microservices/docker-compose.yml up -d \
+            vault-server vault-client
+          export GUEST_HOME="${GITHUB_WORKSPACE}"
+          ./docker-compose-wrapper.sh
       - name: Bootstrap
         run: |
           export GUEST_HOME="${GITHUB_WORKSPACE}"

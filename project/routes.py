@@ -5,7 +5,7 @@ from mailchimp3 import MailChimp
 from wtforms import Form, StringField
 from wtforms.validators import DataRequired, Email
 
-from project.python_modules.secrets import get_secret
+from project.secrets import get_secret
 
 
 def configure_routes(app, db):
