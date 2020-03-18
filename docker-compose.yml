@@ -6,7 +6,7 @@ services:
     ports:
       - 8200:8200
     volumes:
-      - ./vault:/vault
+      - ./services/vault:/vault
     environment:
       - VAULT_ADDR=http://localhost:8200
     cap_add:
@@ -20,11 +20,12 @@ services:
     environment:
       - VAULT_ADDR=http://vault-server:8200
     volumes:
-      - ./vault-init.sh:/usr/local/bin/vault-init.sh
-      - ./vault-init.py:/usr/local/bin/vault-init.py
-      - ./vault:/vault
-      - ./.env:/.env
-      - ./requirements.lock:/requirements.lock
+      - ./services/vault/vault-init.sh:/usr/local/bin/vault-init.sh
+      - ./services/vault/vault-init.py:/usr/local/bin/vault-init.py
+      - ./services/vault:/vault
+      - ./services/vault/.env:/.env
+      - ./services/vault/requirements.txt:/requirements.txt
+      - ./modules:/modules
     command: /usr/local/bin/vault-init.sh
     depends_on:
       - vault-server
@@ -40,6 +41,17 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
-      - ./db/my.cnf:/etc/mysql/my.cnf
+      - ./services/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+      - ./services/db/my.cnf:/etc/mysql/my.cnf
+    restart: always
+
+  app:
+    image: app:1
+    container_name: app
+    build: ./services/app
+    ports:
+      - 5000:5000
+    volumes:
+      - ./modules:/app/modules
+      - ./services/vault:/vault
     restart: always

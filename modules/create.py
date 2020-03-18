@@ -5,12 +5,16 @@ from flask_mysqldb import MySQL
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(
+        __name__,
+        template_folder='/app/templates',
+        static_folder='/app/static'
+    )
     return app
 
 
 def create_db(app):
-    app.config['MYSQL_HOST'] = '127.0.0.1'
+    app.config['MYSQL_HOST'] = 'db'
     app.config['MYSQL_USER'] = 'root'
     app.config['MYSQL_PASSWORD'] = 'root'
     app.config['MYSQL_DB'] = 'zapata'

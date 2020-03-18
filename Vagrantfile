@@ -17,15 +17,12 @@ Vagrant.configure("2") do |config|
   config.vm.provision :docker
   config.vm.provision :docker_compose, 
     compose_version: "1.25.4", 
-    yml: "/vagrant/microservices/docker-compose.yml",
+    yml: "/vagrant/docker-compose.yml",
     command_options: { up: "-d vault-server vault-client"},
     run: "always",
     env: { "GUEST_HOME" => "/vagrant"}
   config.vm.provision "shell",
     path: "docker-compose-wrapper.sh",
-    env: {"GUEST_HOME" => "/vagrant"}
-  config.vm.provision "shell", 
-    path: "bootstrap-app.sh",
     env: {"GUEST_HOME" => "/vagrant"}
 
   config.vm.define "dev" do |dev|
