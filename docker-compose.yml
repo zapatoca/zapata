@@ -43,6 +43,7 @@ services:
     volumes:
       - ./services/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
       - ./services/db/my.cnf:/etc/mysql/my.cnf
+      - dbdata:/var/lib/mysql
     restart: always
 
   app:
@@ -55,3 +56,6 @@ services:
       - ./modules:/app/modules
       - ./services/vault:/vault
     restart: always
+
+volumes:
+  dbdata:
