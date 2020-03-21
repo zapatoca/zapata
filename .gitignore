@@ -6,3 +6,6 @@
 geckodriver/*
 vaultkeys
 .env
+.terraform
+Pipfile
+terraform.tfstate*

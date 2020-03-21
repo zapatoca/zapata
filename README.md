@@ -8,10 +8,18 @@
 * Zapata - http://localhost:5000
 * Vault  - http://localhost:8200
 
+Or
+
+* Run: `terraform apply -auto-approve`
+
 
 ## Teardown DEV environment
 
 * Run: `vagrant destroy -f dev`
+
+Or
+
+* Run: `terraform destroy -auto-approve`
 
 
 ## Spin STAGE environment
