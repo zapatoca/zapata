@@ -9,3 +9,4 @@ vaultkeys
 .terraform
 Pipfile
 terraform.tfstate*
+*.gz

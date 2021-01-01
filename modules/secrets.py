@@ -16,7 +16,7 @@ def get_secret(host, key):
         time.sleep(5)
     if os.getenv("GUEST_HOME") is not None:
         vaultkeysfile = os.getenv('GUEST_HOME') + \
-            '/services/vault/vaultkeys'
+            '/zapata/vault/vaultkeys'
     else:
         vaultkeysfile = '/vault/vaultkeys'
     with open(vaultkeysfile, 'r') as vaultkeys:

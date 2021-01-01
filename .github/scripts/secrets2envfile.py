@@ -4,7 +4,7 @@ import os
 
 
 def main():
-    with open('./services/vault/.env', 'w') as envfile:
+    with open('./zapata/vault/.env', 'w') as envfile:
         envfile.write(
             'MYSQL_PASSWORD='+os.getenv('MYSQL_PASSWORD')+'\n'
         )

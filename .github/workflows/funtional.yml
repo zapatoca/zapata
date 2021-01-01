@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      MYSQL_PASSWORD: root
+      MYSQL_PASSWORD: 'root'
       MAILCHIMP_USERNAME: no@such.email
       MAILCHIMP_APIKEY: 12345
       MAILCHIMP_LISTID: 12345
@@ -35,12 +35,8 @@ jobs:
           sudo apt-get install -y mysql-client libmysqlclient-dev
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install -r services/app/requirements.txt
-          pip install -r tests/requirements-test.txt
-          wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
-          mkdir geckodriver
-          tar -xzf geckodriver-v0.26.0-linux64.tar.gz -C geckodriver
+          pip install -r zapata/app/requirements.txt
       - name: Test with pytest
         run: |
           export GUEST_HOME="${GITHUB_WORKSPACE}"
-          pytest
+          make functional

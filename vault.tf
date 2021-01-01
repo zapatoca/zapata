@@ -19,7 +19,7 @@ resource "docker_container" "vault-server" {
     external = "8200"
   }
   volumes {
-    host_path      = "${path.cwd}/services/vault"
+    host_path      = "${path.cwd}/zapata/vault"
     container_path = "/vault"
   }
   env = ["VAULT_ADDR=http://localhost:8200"]
@@ -36,23 +36,23 @@ resource "docker_container" "vault-client" {
   name    = "vault-client"
   command = ["/usr/local/bin/vault-init.sh"]
   volumes {
-    host_path      = "${path.cwd}/services/vault/vault-init.sh"
+    host_path      = "${path.cwd}/zapata/vault/vault-init.sh"
     container_path = "/usr/local/bin/vault-init.sh"
   }
   volumes {
-    host_path      = "${path.cwd}/services/vault/vault-init.py"
+    host_path      = "${path.cwd}/zapata/vault/vault-init.py"
     container_path = "/usr/local/bin/vault-init.py"
   }
   volumes {
-    host_path      = "${path.cwd}/services/vault"
+    host_path      = "${path.cwd}/zapata/vault"
     container_path = "/vault"
   }
   volumes {
-    host_path      = "${path.cwd}/services/vault/.env"
+    host_path      = "${path.cwd}/zapata/vault/.env"
     container_path = "/.env"
   }
   volumes {
-    host_path      = "${path.cwd}/services/vault/requirements.txt"
+    host_path      = "${path.cwd}/zapata/vault/requirements.txt"
     container_path = "/requirements.txt"
   }
   volumes {
