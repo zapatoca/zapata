@@ -15,21 +15,17 @@ end
 Vagrant.configure("2") do |config|
 
   config.vm.provision :docker
-  config.vm.provision :docker_compose, 
-    compose_version: "1.25.4", 
+  config.vm.provision :docker_compose,
+    compose_version: "1.27.4",
     yml: "/vagrant/docker-compose.yml",
-    command_options: { up: "-d vault-server vault-client"},
     run: "always",
     env: { "GUEST_HOME" => "/vagrant"}
-  config.vm.provision "shell",
-    path: "docker-compose-wrapper.sh",
-    env: {"GUEST_HOME" => "/vagrant"}
 
   config.vm.define "dev" do |dev|
     dev.vm.box = "hashicorp/bionic64"
-    dev.vm.network "forwarded_port", guest: 5000, host: 5000 
+    dev.vm.network "forwarded_port", guest: 5000, host: 5000
     dev.vm.network "forwarded_port", guest: 3306, host: 3306
-    dev.vm.network "forwarded_port", guest: 8200, host: 8200 
+    dev.vm.network "forwarded_port", guest: 8200, host: 8200
   end
 
   config.vm.define "stage" do |stage|
