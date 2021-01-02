@@ -6,7 +6,7 @@ services:
     ports:
       - 8200:8200
     volumes:
-      - ./services/vault:/vault
+      - ./zapata/vault:/vault
     environment:
       - VAULT_ADDR=http://localhost:8200
     cap_add:
@@ -20,11 +20,11 @@ services:
     environment:
       - VAULT_ADDR=http://vault-server:8200
     volumes:
-      - ./services/vault/vault-init.sh:/usr/local/bin/vault-init.sh
-      - ./services/vault/vault-init.py:/usr/local/bin/vault-init.py
-      - ./services/vault:/vault
-      - ./services/vault/.env:/.env
-      - ./services/vault/requirements.txt:/requirements.txt
+      - ./zapata/vault/vault-init.sh:/usr/local/bin/vault-init.sh
+      - ./zapata/vault/vault-init.py:/usr/local/bin/vault-init.py
+      - ./zapata/vault:/vault
+      - ./zapata/vault/.env:/.env
+      - ./zapata/vault/requirements.txt:/requirements.txt
       - ./modules:/modules
     command: /usr/local/bin/vault-init.sh
     depends_on:
@@ -36,25 +36,25 @@ services:
     container_name: db
     environment:
       - MYSQL_DATABASE=zapata
-      - MYSQL_ROOT_PASSWORD
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_ROOT_HOST=%
     ports:
       - 3306:3306
     volumes:
-      - ./services/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
-      - ./services/db/my.cnf:/etc/mysql/my.cnf
+      - ./zapata/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+      - ./zapata/db/my.cnf:/etc/mysql/my.cnf
       - dbdata:/var/lib/mysql
     restart: always
 
   app:
     image: app:1
     container_name: app
-    build: ./services/app
+    build: ./zapata/app
     ports:
       - 5000:5000
     volumes:
       - ./modules:/app/modules
-      - ./services/vault:/vault
+      - ./zapata/vault:/vault
     restart: always
 
 volumes:
