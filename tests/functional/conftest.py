@@ -2,6 +2,7 @@
 
 import os
 
+import backoff
 import MySQLdb
 import pytest
 
@@ -13,6 +14,9 @@ def firefox_options(firefox_options):
 
 
 @pytest.fixture
+@backoff.on_exception(
+    backoff.expo, MySQLdb._exceptions.OperationalError, max_tries=10
+)
 def mysql():
     return MySQLdb.connect(host="127.0.0.1", user="root", passwd="root")
 

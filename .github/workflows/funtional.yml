@@ -19,24 +19,15 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.9
-      - name: Setup env file
+      - name: Dependencies
         run: |
-          ./.github/scripts/secrets2envfile.py
-      - name: Shutdown Ubuntu MySQL
-        run: sudo service mysql stop
-      - name: Build the docker-compose stack
+          sudo systemctl stop mysql
+          sudo apt-get install -y mysql-client
+      - name: Spin
         run: |
-          docker-compose -f docker-compose.yml up -d \
-            vault-server vault-client
           export GUEST_HOME="${GITHUB_WORKSPACE}"
-          sudo -E ./docker-compose-wrapper.sh
-      - name: Install dependencies
-        run: |
-          sudo apt-get install -y mysql-client libmysqlclient-dev
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install -r zapata/app/requirements.txt
-      - name: Test with pytest
+          docker-compose up --build -d
+      - name: Test
         run: |
           export GUEST_HOME="${GITHUB_WORKSPACE}"
           make functional
