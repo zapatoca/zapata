@@ -48,7 +48,7 @@ def test_new_subscriber(selenium, test_input):
 def test_building(selenium):
     selenium.get("http://localhost:5000/building")
     cols = selenium.find_elements_by_xpath("//table/thead/tr[1]/th")
-    assert len(cols) == 3
+    assert len(cols) == 4
     rows = selenium.find_elements_by_xpath("//table/tbody/tr")
     assert len(rows) == 19
     table = selenium.find_element_by_tag_name("table")
