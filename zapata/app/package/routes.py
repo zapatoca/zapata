@@ -128,7 +128,7 @@ def configure_routes(app, db):
     @app.route("/building", methods=["GET", "POST"])
     def building() -> str:
         d = {
-            "appartment": [
+            "Appartment": [
                 1,
                 2,
                 3,
@@ -149,7 +149,7 @@ def configure_routes(app, db):
                 18,
                 19,
             ],
-            "amount": [
+            "Total": [
                 5400,
                 5400,
                 3780,
@@ -174,7 +174,7 @@ def configure_routes(app, db):
                 0,
                 0,
                 0,
-                0,
+                315,
                 0,
                 157,
                 0,
@@ -189,11 +189,33 @@ def configure_routes(app, db):
                 0,
                 0,
                 0,
+                600,
+            ],
+            "Balance": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
                 0,
             ],
         }
         df = pd.DataFrame(data=d)
-        df["amount"] = df["amount"].apply(format)
+        df["Balance"] = df["Total"] - df["January"]
+        df["Total"] = df["Total"].apply(format)
         df["January"] = df["January"].apply(format)
-
+        df["Balance"] = df["Balance"].apply(format)
         return render_template("building.html", table=df.to_html(index=False))
