@@ -170,6 +170,27 @@ def configure_routes(app, db):
                 7200,
                 7200,
             ],
+            "Monthly": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+            ],
             "January": [
                 0,
                 0,
@@ -181,13 +202,13 @@ def configure_routes(app, db):
                 0,
                 0,
                 0,
-                0,
+                450,
                 0,
                 0,
                 5400,
                 0,
-                0,
-                0,
+                1350,
+                405,
                 0,
                 600,
             ],
@@ -214,8 +235,12 @@ def configure_routes(app, db):
             ],
         }
         df = pd.DataFrame(data=d)
+        df["Monthly"] = (df["Total"] / 12).astype(int)
         df["Balance"] = df["Total"] - df["January"]
+
         df["Total"] = df["Total"].apply(format)
+        df["Monthly"] = df["Monthly"].apply(format)
         df["January"] = df["January"].apply(format)
         df["Balance"] = df["Balance"].apply(format)
+
         return render_template("building.html", table=df.to_html(index=False))
