@@ -3,7 +3,6 @@
 import time
 
 import pytest
-from selenium.webdriver.support.color import Color
 
 
 def test_title(selenium):
@@ -51,8 +50,3 @@ def test_building(selenium):
     assert len(cols) == 5
     rows = selenium.find_elements_by_xpath("//table/tbody/tr")
     assert len(rows) == 19
-    table = selenium.find_element_by_tag_name("table")
-    assert (
-        table.value_of_css_property("background-color")
-        == Color.from_string("white").rgb
-    )
