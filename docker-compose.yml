@@ -1,35 +1,5 @@
 version: "3.9"
 services:
-  vault-server:
-    image: vault:1.3.2
-    container_name: vault-server
-    ports:
-      - 8200:8200
-    volumes:
-      - ./zapata/vault:/vault
-    environment:
-      - VAULT_ADDR=http://localhost:8200
-    cap_add:
-      - IPC_LOCK
-    command: server
-    restart: always
-
-  vault-client:
-    image: vault:1.3.2
-    container_name: vault-client
-    environment:
-      - VAULT_ADDR=http://vault-server:8200
-    volumes:
-      - ./zapata/vault/vault-init.sh:/usr/local/bin/vault-init.sh
-      - ./zapata/vault/vault-init.py:/usr/local/bin/vault-init.py
-      - ./zapata/vault:/vault
-      - ./zapata/vault/.env:/.env
-      - ./zapata/vault/requirements.txt:/requirements.txt
-      - ./modules:/modules
-    command: /usr/local/bin/vault-init.sh
-    depends_on:
-      - vault-server
-    user: "0"
 
   db:
     image: mysql:5

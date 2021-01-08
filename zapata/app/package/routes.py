@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from datetime import datetime
+
 import pandas as pd
 from flask import flash, redirect, render_template, request, url_for
 from mailchimp3 import MailChimp
@@ -122,125 +124,85 @@ def configure_routes(app, db):
         except Exception as e:
             app.logger.info(e)
 
-    def format(x) -> str:
-        return f"₪ {x}"
+    def render(df) -> str:
+        df = df[["Total", "Monthly", "January", "Balance"]]
+
+        props = [("border", "2px solid black")]
+
+        styles = [
+            {"selector": "table, th, td", "props": props},
+        ]
+
+        return (
+            df.style.set_properties(
+                **{
+                    "background-color": "white",
+                    "color": "black",
+                }
+            )
+            .apply(color_negative_red, axis=1)
+            .format("₪ {}")
+            .set_table_styles(styles)
+            .render()
+        )
+
+    def color_negative_red(row) -> list[str]:
+        currentMonth = datetime.now().month
+        return [
+            "background-color: red"
+            if currentMonth * row["Monthly"] > sum([row["January"]])
+            and index == "January"
+            else "background-color: white"
+            for index, val in row.items()
+        ]
 
     @app.route("/building", methods=["GET", "POST"])
     def building() -> str:
-        d = {
-            "Appartment": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11,
-                12,
-                13,
-                14,
-                15,
-                16,
-                17,
-                18,
-                19,
-            ],
-            "Total": [
-                5400,
-                5400,
-                3780,
-                3780,
-                3780,
-                3780,
-                3780,
-                4500,
-                4500,
-                4860,
-                5400,
-                5400,
-                4860,
-                5400,
-                4860,
-                5400,
-                4860,
-                7200,
-                7200,
-            ],
-            "Monthly": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-            ],
-            "January": [
-                0,
-                0,
-                0,
-                315,
-                0,
-                157,
-                0,
-                0,
-                0,
-                0,
-                450,
-                0,
-                0,
-                5400,
-                0,
-                1350,
-                405,
-                0,
-                600,
-            ],
-            "Balance": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-            ],
-        }
-        df = pd.DataFrame(data=d)
+        total = [
+            5400,
+            5400,
+            3780,
+            3780,
+            3780,
+            3780,
+            3780,
+            4500,
+            4500,
+            4860,
+            5400,
+            5400,
+            4860,
+            5400,
+            4860,
+            5400,
+            4860,
+            7200,
+            7200,
+        ]
+        january = [
+            1350,
+            450,
+            3780,
+            315,
+            0,
+            157,
+            0,
+            0,
+            0,
+            1215,
+            450,
+            0,
+            810,
+            5400,
+            0,
+            1350,
+            405,
+            0,
+            600,
+        ]
+        df = pd.DataFrame(data={"Total": total, "January": january})
         df["Monthly"] = (df["Total"] / 12).astype(int)
-        df["Balance"] = df["Total"] - df["January"]
+        df["Balance"] = df["Total"] - sum([df["January"]])
+        df.index += 1
 
-        df["Total"] = df["Total"].apply(format)
-        df["Monthly"] = df["Monthly"].apply(format)
-        df["January"] = df["January"].apply(format)
-        df["Balance"] = df["Balance"].apply(format)
-
-        return render_template("building.html", table=df.to_html(index=False))
+        return render_template("building.html", table=render(df))
