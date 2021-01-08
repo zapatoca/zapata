@@ -25,7 +25,6 @@ Vagrant.configure("2") do |config|
     dev.vm.box = "hashicorp/bionic64"
     dev.vm.network "forwarded_port", guest: 5000, host: 5000
     dev.vm.network "forwarded_port", guest: 3306, host: 3306
-    dev.vm.network "forwarded_port", guest: 8200, host: 8200
   end
 
   config.vm.define "stage" do |stage|

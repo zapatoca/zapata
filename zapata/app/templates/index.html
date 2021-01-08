@@ -3,22 +3,7 @@
 {% block body %}
 <div class="banner">
   <div class="container">
-    <div class="row">
-      <div class="col-md-8 offset-md-2">
-        <div class="header-text caption">
-          <h2>Sorry for the dust!<br>We know it’s taking a while but sit tight and we’ll be with you soon.</h2>
-          <div id="search-section">
-            <form id="suggestion_form" name="gs" method="POST" action="#">
-              {% from "includes/_formhelpers.html" import render_field %}
-              <div class="searchText">
-                {{ render_field(form.email, class_="searchText", placeholder="Enter your email here...", autocomplete="off") }}
-              </div>
-              <input type="submit" class="main-button" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    {{ table|safe }}
   </div>
 </div>
 {% endblock %}
