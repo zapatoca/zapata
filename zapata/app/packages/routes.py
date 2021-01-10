@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from datetime import datetime
 
 import pandas as pd
@@ -41,8 +39,9 @@ def configure_routes(app, db):
 
     @app.route("/", methods=["GET"])
     def index() -> str:
-        df = pd.read_json("data.json")
+        df = pd.read_sql_table("income", db.get_engine())
         df["Monthly"] = (df["Total"] / 12).astype(int)
         df["Balance"] = df["Total"] - sum([df["January"]])
+        df.index += 1
 
         return render_template("index.html", table=render(df))

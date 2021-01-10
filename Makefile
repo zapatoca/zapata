@@ -25,6 +25,7 @@ geckodriver-v0.28.0-$(OS).tar.gz:
 dependencies: geckodriver-v0.28.0-$(OS).tar.gz cleanup
 	mkdir geckodriver
 	tar -xzf geckodriver-v0.28.0-$(OS).tar.gz -C geckodriver
+	pip install --upgrade pip
 	pip install -r tests/requirements.txt
 
 cleanup:

@@ -1,6 +1,4 @@
-flask_mysqldb==0.2.0
+Flask-SQLAlchemy==2.4.4
 Flask==1.1.1
-mailchimp3==3.0.12
 pandas==1.2.0
-passlib==1.7.2
-wtforms==2.2.1
+psycopg2==2.8.6
