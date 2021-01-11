@@ -19,12 +19,12 @@ Vagrant.configure("2") do |config|
     compose_version: "1.27.4",
     yml: "/vagrant/docker-compose.yml",
     run: "always",
-    env: { "GUEST_HOME" => "/vagrant"}
+    env: { "HOME" => "/vagrant"}
 
   config.vm.define "dev" do |dev|
     dev.vm.box = "hashicorp/bionic64"
     dev.vm.network "forwarded_port", guest: 5000, host: 5000
-    dev.vm.network "forwarded_port", guest: 3306, host: 3306
+    dev.vm.network "forwarded_port", guest: 5432, host: 5432
   end
 
   config.vm.define "stage" do |stage|

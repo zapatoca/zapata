@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
+import time
+
 
 def test_title(selenium):
+    time.sleep(10)
     selenium.get("http://localhost:5000")
     assert selenium.title == "Zapata"
 
