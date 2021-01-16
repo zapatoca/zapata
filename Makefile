@@ -10,9 +10,9 @@ ifeq ($(UNAME), Darwin)
 	OS := macos
 endif
 
-AWS_ACCESS_KEY_ID     := $(shell aws configure get aws_access_key_id)
-AWS_SECRET_ACCESS_KEY := $(shell aws configure get aws_secret_access_key)
-AWS_DEFAULT_REGION    := $(shell aws configure get region)
+AWS_ACCESS_KEY_ID     := $(shell awscliv2 configure get aws_access_key_id)
+AWS_SECRET_ACCESS_KEY := $(shell awscliv2 configure get aws_secret_access_key)
+AWS_DEFAULT_REGION    := $(shell awscliv2 configure get region)
 
 up:
 ifeq ($(UNAME), Darwin)
