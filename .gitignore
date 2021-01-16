@@ -9,3 +9,4 @@ geckodriver/*
 Pipfile
 terraform.tfstate*
 *.gz
+.coverage
