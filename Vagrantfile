@@ -19,7 +19,12 @@ Vagrant.configure("2") do |config|
     compose_version: "1.27.4",
     yml: "/vagrant/docker-compose.yml",
     run: "always",
-    env: { "HOME" => "/vagrant"}
+    env: {
+      "HOME"                  => "/vagrant",
+      "AWS_ACCESS_KEY_ID"     => ENV['AWS_ACCESS_KEY_ID'],
+      "AWS_SECRET_ACCESS_KEY" => ENV['AWS_SECRET_ACCESS_KEY'],
+      "AWS_DEFAULT_REGION"    => ENV['AWS_DEFAULT_REGION']
+    }
 
   config.vm.define "dev" do |dev|
     dev.vm.box = "hashicorp/bionic64"

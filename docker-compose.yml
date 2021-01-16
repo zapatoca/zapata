@@ -21,6 +21,19 @@ services:
     ports:
       - 5000:5000
     restart: always
+    depends_on:
+      - db
 
-volumes:
-  dbdata:
+  reminders:
+    image: reminders:1
+    container_name: reminders
+    build: ./zapata/reminders
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_DEFAULT_REGION
+    restart: on-failure
+    depends_on:
+      - app
+
+
