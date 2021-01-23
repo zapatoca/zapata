@@ -1,0 +1,26 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: /zapata/app
+  schedule:
+    interval: weekly
+  allow:
+  - dependency-type: all
+- package-ecosystem: pip
+  directory: /zapata/reminders
+  schedule:
+    interval: weekly
+  allow:
+  - dependency-type: all
+- package-ecosystem: pip
+  directory: /tests
+  schedule:
+    interval: weekly
+  allow:
+  - dependency-type: all
+- package-ecosystem: pip
+  directory: /tests/unit
+  schedule:
+    interval: weekly
+  allow:
+  - dependency-type: all

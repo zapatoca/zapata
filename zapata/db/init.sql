@@ -43,7 +43,7 @@ COPY public.income (index, "Total", "January") FROM stdin;
 3	3780	3780
 4	3780	315
 5	3780	945
-6	3780	157
+6	3780	630
 7	3780	315
 8	4500	2250
 9	4500	1125
