@@ -11,7 +11,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ${HOME}/zapata/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ${HOME}/zapata/db/dump.sql:/tmp/dump.sql
     restart: always
 
   app:

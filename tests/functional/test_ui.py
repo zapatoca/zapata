@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-import time
 
-
-def test_title(selenium):
-    time.sleep(10)
+def test_title(selenium, init_db):
     selenium.get("http://localhost:5000")
     assert selenium.title == "Zapata"
 
@@ -15,9 +12,7 @@ def test_logo_click(selenium):
     assert selenium.current_url == "http://localhost:5000/"
 
 
-def test_table(selenium):
+def test_tables(selenium):
     selenium.get("http://localhost:5000/")
-    cols = selenium.find_elements_by_xpath("//table/thead/tr[1]/th")
-    assert len(cols) == 5
-    rows = selenium.find_elements_by_xpath("//table/tbody/tr")
-    assert len(rows) == 19
+    tables = selenium.find_elements_by_tag_name("table")
+    assert len(tables) == 2
