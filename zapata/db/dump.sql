@@ -131,8 +131,14 @@ COPY public.fees (id, yearly) FROM stdin;
 --
 
 COPY public.incidents (id, description) FROM stdin;
-1	Cladding
-3	3rd floor pipes
+1	חיפויים
+2	נזילת מים בחדר דוודים קומה 3
+3	תאורת לובי קומות 3-4
+4	להוציא קבלה ליפה כדורי על סך 700 ש״ח
+5	לשלם לליאורה מילבאום 37.5 ש״ח בגין רכישת קבלות
+6	תשלום לגנן הקודם - 1200 ש״ח
+7	שכפול מפתחות לחדר אופניים
+8	אינטרקום - הורדת עוצמת הצלצול
 \.
 
 
@@ -174,7 +180,7 @@ SELECT pg_catalog.setval('public.fees_id_seq', 1, false);
 -- Name: incidents_id_seq; Type: SEQUENCE SET; Schema: public; Owner: zapata
 --
 
-SELECT pg_catalog.setval('public.incidents_id_seq', 3, true);
+SELECT pg_catalog.setval('public.incidents_id_seq', 8, true);
 
 
 --
