@@ -1347,3 +1347,14 @@ footer .sub-footer a {
 		letter-spacing: 0px;
 	}
 }
+
+.row {
+	margin-left:-5px;
+	margin-right:-5px;
+}
+
+.column {
+	float: left;
+	width: 50%;
+	padding: 5px;
+}

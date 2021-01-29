@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :docker
   config.vm.provision :docker_compose,
-    compose_version: "1.27.4",
+    compose_version: "1.28.2",
     yml: "/vagrant/docker-compose.yml",
     run: "always",
     env: {
@@ -30,6 +30,18 @@ Vagrant.configure("2") do |config|
     dev.vm.box = "hashicorp/bionic64"
     dev.vm.network "forwarded_port", guest: 5000, host: 5000
     dev.vm.network "forwarded_port", guest: 5432, host: 5432
+
+    dev.trigger.before :destroy do |trigger|
+      trigger.info = "Dumping the database before destroying the VM..."
+      trigger.on_error = :continue
+      trigger.run_remote = {inline: "docker exec -t db pg_dump -U zapata zapata -f /tmp/dump.sql"}
+    end
+
+    dev.trigger.after :up do |trigger|
+      trigger.info = "Restoring the database after spinning the VM..."
+      trigger.on_error = :continue
+      trigger.run_remote = {inline: "sleep 30;docker exec -t db psql -U zapata -d zapata -f /tmp/dump.sql"}
+    end
   end
 
   config.vm.define "stage" do |stage|

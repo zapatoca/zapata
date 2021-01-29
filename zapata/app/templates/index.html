@@ -3,7 +3,14 @@
 {% block body %}
 <div class="banner">
   <div class="container">
-    {{ table|safe }}
+    <div class="row">
+      <div class="column">
+        {{ income|safe }}
+      </div>
+      <div class="column">
+        {{ incidents|safe }}
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
