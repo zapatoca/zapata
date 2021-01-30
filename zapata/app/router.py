@@ -12,7 +12,7 @@ router = Blueprint("router", __name__)
 def color_negative_red(row) -> list[str]:
     return [
         "background-color: red"
-        if row["Alert"] and index == "January"
+        if row["Alert"] and index == datetime.now().strftime("%b")
         else "background-color: white"
         for index, val in row.items()
     ]
@@ -28,7 +28,7 @@ def render(df, name) -> str:
     ]
 
     if name == "income":
-        df = df[["Total", "Monthly", "January", "Balance", "Alert"]]
+        df = df[["Total", "Monthly", "Jan", "Feb", "Balance", "Alert"]]
 
         return (
             df.style.hide_columns(["Alert"])
@@ -61,10 +61,12 @@ def _index() -> str:
     with db.engine.begin() as conn:
         df = pd.read_sql_table("income", conn)
         df["Monthly"] = (df["Total"] / 12).astype(int)
-        df["Balance"] = df["Total"] - sum([df["January"]])
+        df["Balance"] = df["Total"] - sum([df["Jan"], df["Feb"]])
 
         currentMonth = datetime.now().month
-        df["Alert"] = currentMonth * df["Monthly"] > sum([df["January"]])
+        df["Alert"] = currentMonth * df["Monthly"] > sum(
+            [df["Jan"], df["Feb"]]
+        )
 
         df.to_sql("income", con=conn, if_exists="replace", index=False)
 
