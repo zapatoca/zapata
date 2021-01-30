@@ -1,10 +1,11 @@
 from datetime import datetime
 
 import pandas as pd
-from database import db
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from models import Incident
 from wtforms import Form, StringField
+
+from database import db
+from models import Incident
 
 router = Blueprint("router", __name__)
 
