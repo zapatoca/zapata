@@ -15,4 +15,4 @@ def test_logo_click(selenium):
 def test_tables(selenium):
     selenium.get("http://localhost:5000/")
     tables = selenium.find_elements_by_tag_name("table")
-    assert len(tables) == 2
+    assert len(tables) == 3

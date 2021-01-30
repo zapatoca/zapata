@@ -21,6 +21,41 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: buildings; Type: TABLE; Schema: public; Owner: zapata
+--
+
+CREATE TABLE public.buildings (
+    id integer NOT NULL,
+    address character varying,
+    flats integer
+);
+
+
+ALTER TABLE public.buildings OWNER TO zapata;
+
+--
+-- Name: buildings_id_seq; Type: SEQUENCE; Schema: public; Owner: zapata
+--
+
+CREATE SEQUENCE public.buildings_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.buildings_id_seq OWNER TO zapata;
+
+--
+-- Name: buildings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: zapata
+--
+
+ALTER SEQUENCE public.buildings_id_seq OWNED BY public.buildings.id;
+
+
+--
 -- Name: fees; Type: TABLE; Schema: public; Owner: zapata
 --
 
@@ -106,6 +141,13 @@ CREATE TABLE public.income (
 ALTER TABLE public.income OWNER TO zapata;
 
 --
+-- Name: buildings id; Type: DEFAULT; Schema: public; Owner: zapata
+--
+
+ALTER TABLE ONLY public.buildings ALTER COLUMN id SET DEFAULT nextval('public.buildings_id_seq'::regclass);
+
+
+--
 -- Name: fees id; Type: DEFAULT; Schema: public; Owner: zapata
 --
 
@@ -117,6 +159,15 @@ ALTER TABLE ONLY public.fees ALTER COLUMN id SET DEFAULT nextval('public.fees_id
 --
 
 ALTER TABLE ONLY public.incidents ALTER COLUMN id SET DEFAULT nextval('public.incidents_id_seq'::regclass);
+
+
+--
+-- Data for Name: buildings; Type: TABLE DATA; Schema: public; Owner: zapata
+--
+
+COPY public.buildings (id, address, flats) FROM stdin;
+1	6 Meridor Yaakov st., Tel Aviv, Israel	19
+\.
 
 
 --
@@ -171,6 +222,13 @@ COPY public.income (index, "Total", "Jan", "Feb", "Monthly", "Balance", "Alert")
 
 
 --
+-- Name: buildings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: zapata
+--
+
+SELECT pg_catalog.setval('public.buildings_id_seq', 1, true);
+
+
+--
 -- Name: fees_id_seq; Type: SEQUENCE SET; Schema: public; Owner: zapata
 --
 
@@ -182,6 +240,14 @@ SELECT pg_catalog.setval('public.fees_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.incidents_id_seq', 8, true);
+
+
+--
+-- Name: buildings buildings_pkey; Type: CONSTRAINT; Schema: public; Owner: zapata
+--
+
+ALTER TABLE ONLY public.buildings
+    ADD CONSTRAINT buildings_pkey PRIMARY KEY (id);
 
 
 --

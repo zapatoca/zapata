@@ -11,3 +11,10 @@ class Fee(db.Model):
     __tablename__ = "fees"
     id = db.Column(db.Integer, primary_key=True)
     yearly = db.Column(db.Integer)
+
+
+class Building(db.Model):
+    __tablename__ = "buildings"
+    id = db.Column(db.Integer, primary_key=True)
+    address = db.Column(db.String)
+    flats = db.Column(db.Integer)
