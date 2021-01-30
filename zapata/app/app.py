@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-from database import db
 from flask import Flask
+
+from database import db
 from models import *  # noqa
 from router import router
 

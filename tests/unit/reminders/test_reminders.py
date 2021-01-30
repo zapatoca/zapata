@@ -1,5 +1,4 @@
 import mock
-
 from zapata.reminders import reminders
 
 
