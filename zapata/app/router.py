@@ -2,10 +2,10 @@ from datetime import datetime
 
 import pandas as pd
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from wtforms import Form, StringField
+from wtforms import Form, IntegerField, StringField
 
 from database import db
-from models import Incident
+from models import Building, Incident
 
 router = Blueprint("router", __name__)
 
@@ -74,11 +74,13 @@ def _index() -> str:
     with db.engine.begin() as conn:
         df1 = pd.read_sql_table("income", conn)
         df2 = pd.read_sql_table("incidents", conn)
+        df3 = pd.read_sql_table("buildings", conn)
 
     return render_template(
         "index.html",
         income=render(df1, "income"),
         incidents=render(df2, "incidents"),
+        buildings=render(df3, "buildings"),
     )
 
 
@@ -99,3 +101,25 @@ def _incident() -> str:
             flash(f"{e}", category="warning")
         return redirect(url_for("router._index"))
     return render_template("incident.html", form=form)
+
+
+@router.route("/building", methods=["GET", "POST"])
+def _building() -> str:
+    class newBuilding(Form):
+        address = StringField("Address")
+        flats = IntegerField("Number of Flats")
+
+    form = newBuilding(request.form)
+
+    if request.method == "POST" and form.validate():
+        try:
+            db.session.add(
+                Building(address=form.address.data, flats=form.flats.data)
+            )
+            db.session.commit()
+            flash("Building was created", "success")
+        except Exception as e:
+            print(f"{e}", flush=True)
+            flash(f"{e}", category="warning")
+        return redirect(url_for("router._index"))
+    return render_template("building.html", form=form)
