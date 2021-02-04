@@ -200,9 +200,9 @@ COPY public.incidents (id, description) FROM stdin;
 
 COPY public.income (index, "Total", "Jan", "Feb", "Monthly", "Balance", "Alert") FROM stdin;
 1	5400	1350	0	450	4050	f
-2	5400	450	0	450	4950	f
+2	5400	450	450	450	4950	f
 3	3780	3780	0	315	0	f
-4	3780	315	0	315	3465	f
+4	3780	315	315	315	3465	f
 5	3780	945	0	315	2835	f
 6	3780	630	0	315	3150	f
 7	3780	315	0	315	3465	f
@@ -215,9 +215,9 @@ COPY public.income (index, "Total", "Jan", "Feb", "Monthly", "Balance", "Alert")
 14	5400	5400	0	450	0	f
 15	4860	1215	0	405	3645	f
 16	5400	1350	0	450	4050	f
-17	4860	405	0	405	4455	f
+17	4860	405	405	405	4455	f
 18	7200	3600	0	600	3600	f
-19	7200	600	0	600	6600	f
+19	7200	600	600	600	6600	f
 \.
 
 
