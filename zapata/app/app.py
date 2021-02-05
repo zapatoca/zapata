@@ -19,7 +19,11 @@ db.init_app(app)
 app.register_blueprint(router)
 
 
-if __name__ == "__main__":
+def main() -> None:
     # with app.app_context():
     #     db.create_all()
     app.run(debug=True, host="0.0.0.0")
+
+
+if __name__ == "__main__":
+    main()  # pragma: no cover

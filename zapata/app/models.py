@@ -18,3 +18,9 @@ class Building(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     address = db.Column(db.String)
     flats = db.Column(db.Integer)
+
+
+class Project(db.Model):
+    __tablename__ = "projects"
+    id = db.Column(db.Integer, primary_key=True)
+    summary = db.Column(db.String)

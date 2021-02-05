@@ -1,4 +1,4 @@
-.PHONY: dependencies functional up destroy cleanup test coverage coverage-dependencies
+.PHONY: functional-dependencies functional up destroy cleanup test coverage coverage-dependencies dependencies
 .EXPORT_ALL_VARIABLES:
 
 UNAME := $(shell uname)
@@ -27,24 +27,28 @@ endif
 geckodriver-v0.28.0-$(OS).tar.gz:
 	wget https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-$(OS).tar.gz
 
-dependencies: geckodriver-v0.28.0-$(OS).tar.gz cleanup
-	mkdir geckodriver
-	tar -xzf geckodriver-v0.28.0-$(OS).tar.gz -C geckodriver
+dependencies:
 	pip install --upgrade pip
 	pip install -r tests/requirements.txt
 
-cleanup:
-	rm -rf geckodriver
+coverage-dependencies:
+	pip install -r tests/unit/requirements.txt
+	pip install -r zapata/app/requirements.txt
+	pip install -r zapata/reminders/requirements.txt
 
-functional: dependencies up
-	pytest --driver=Firefox --driver-path=geckodriver/geckodriver tests/functional
+functional-dependencies: geckodriver-v0.28.0-$(OS).tar.gz cleanup
+	mkdir geckodriver
+	tar -xzf geckodriver-v0.28.0-$(OS).tar.gz -C geckodriver
+	pip install -r tests/functional/requirements.txt
+
+coverage: dependencies coverage-dependencies
+	python3 -m pytest --cov=zapata --cov-fail-under=48 --cov-report term-missing tests/unit
+
+functional: dependencies functional-dependencies up
+	python3 -m pytest --driver=Firefox --driver-path=geckodriver/geckodriver tests/functional
 
 test: functional
 	make destroy cleanup
 
-coverage-dependencies:
-	pip install -r tests/unit/requirements.txt
-	pip install -r zapata/reminders/requirements.txt
-
-coverage: coverage-dependencies
-	pytest --cov=zapata tests/unit
+cleanup:
+	rm -rf geckodriver

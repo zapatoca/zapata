@@ -141,6 +141,40 @@ CREATE TABLE public.income (
 ALTER TABLE public.income OWNER TO zapata;
 
 --
+-- Name: projects; Type: TABLE; Schema: public; Owner: zapata
+--
+
+CREATE TABLE public.projects (
+    id integer NOT NULL,
+    summary character varying
+);
+
+
+ALTER TABLE public.projects OWNER TO zapata;
+
+--
+-- Name: projects_id_seq; Type: SEQUENCE; Schema: public; Owner: zapata
+--
+
+CREATE SEQUENCE public.projects_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.projects_id_seq OWNER TO zapata;
+
+--
+-- Name: projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: zapata
+--
+
+ALTER SEQUENCE public.projects_id_seq OWNED BY public.projects.id;
+
+
+--
 -- Name: buildings id; Type: DEFAULT; Schema: public; Owner: zapata
 --
 
@@ -159,6 +193,13 @@ ALTER TABLE ONLY public.fees ALTER COLUMN id SET DEFAULT nextval('public.fees_id
 --
 
 ALTER TABLE ONLY public.incidents ALTER COLUMN id SET DEFAULT nextval('public.incidents_id_seq'::regclass);
+
+
+--
+-- Name: projects id; Type: DEFAULT; Schema: public; Owner: zapata
+--
+
+ALTER TABLE ONLY public.projects ALTER COLUMN id SET DEFAULT nextval('public.projects_id_seq'::regclass);
 
 
 --
@@ -200,24 +241,33 @@ COPY public.incidents (id, description) FROM stdin;
 
 COPY public.income (index, "Total", "Jan", "Feb", "Monthly", "Balance", "Alert") FROM stdin;
 1	5400	1350	0	450	4050	f
-2	5400	450	450	450	4950	f
+2	5400	450	450	450	4500	f
 3	3780	3780	0	315	0	f
-4	3780	315	315	315	3465	f
+4	3780	315	315	315	3150	f
 5	3780	945	0	315	2835	f
 6	3780	630	0	315	3150	f
-7	3780	315	0	315	3465	f
+7	3780	315	0	315	3465	t
 8	4500	2250	0	375	2250	f
 9	4500	1125	0	375	3375	f
 10	4860	1215	0	405	3645	f
-11	5400	450	0	450	4950	f
+11	5400	450	0	450	4950	t
 12	5400	1350	0	450	4050	f
 13	4860	810	0	405	4050	f
 14	5400	5400	0	450	0	f
 15	4860	1215	0	405	3645	f
 16	5400	1350	0	450	4050	f
-17	4860	405	405	405	4455	f
+17	4860	405	405	405	4050	f
 18	7200	3600	0	600	3600	f
-19	7200	600	600	600	6600	f
+19	7200	600	600	600	6000	f
+\.
+
+
+--
+-- Data for Name: projects; Type: TABLE DATA; Schema: public; Owner: zapata
+--
+
+COPY public.projects (id, summary) FROM stdin;
+1	חיפויים
 \.
 
 
@@ -243,6 +293,13 @@ SELECT pg_catalog.setval('public.incidents_id_seq', 8, true);
 
 
 --
+-- Name: projects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: zapata
+--
+
+SELECT pg_catalog.setval('public.projects_id_seq', 1, true);
+
+
+--
 -- Name: buildings buildings_pkey; Type: CONSTRAINT; Schema: public; Owner: zapata
 --
 
@@ -264,6 +321,14 @@ ALTER TABLE ONLY public.fees
 
 ALTER TABLE ONLY public.incidents
     ADD CONSTRAINT incidents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: projects projects_pkey; Type: CONSTRAINT; Schema: public; Owner: zapata
+--
+
+ALTER TABLE ONLY public.projects
+    ADD CONSTRAINT projects_pkey PRIMARY KEY (id);
 
 
 --

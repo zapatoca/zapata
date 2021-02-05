@@ -5,7 +5,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from wtforms import Form, IntegerField, StringField
 
 from database import db
-from models import Building, Incident
+from models import Building, Incident, Project
 
 router = Blueprint("router", __name__)
 
@@ -123,3 +123,33 @@ def _building() -> str:
             flash(f"{e}", category="warning")
         return redirect(url_for("router._index"))
     return render_template("building.html", form=form)
+
+
+@router.route("/projects", methods=["GET"])
+def _projects() -> str:
+    with db.engine.begin() as conn:
+        df = pd.read_sql_table("projects", conn)
+    return render_template(
+        "projects.html",
+        projects=render(df, "projects"),
+    )
+
+
+@router.route("/projects/new", methods=["GET", "POST"])
+def _new_project() -> str:
+    class newProject(Form):
+        summary = StringField("Summary")
+
+    form = newProject(request.form)
+
+    if request.method == "POST" and form.validate():
+        try:
+            db.session.add(Project(summary=form.summary.data))
+            db.session.commit()
+            flash("Project was created", "success")
+        except Exception as e:
+            print(f"{e}", flush=True)
+            flash(f"{e}", category="warning")
+        return redirect(url_for("router._projects"))
+
+    return render_template("new_project.html", form=form)
