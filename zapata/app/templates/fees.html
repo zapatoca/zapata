@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="banner">
+  <div class="container">
+    <div class="d-flex justify-content-end">
+      <a class="btn btn-success" role="button" href="{{ url_for('fees._new_fee') }}">New Fee</a>
+    </div>
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+      {{ projects|safe }}
+    </div>
+  </div>
+</main>
+{% endblock %}

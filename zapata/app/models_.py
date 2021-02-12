@@ -7,12 +7,6 @@ class Incident(db.Model):
     description = db.Column(db.String)
 
 
-class Fee(db.Model):
-    __tablename__ = "fees"
-    id = db.Column(db.Integer, primary_key=True)
-    yearly = db.Column(db.Integer)
-
-
 class Building(db.Model):
     __tablename__ = "buildings"
     id = db.Column(db.Integer, primary_key=True)
@@ -23,4 +17,6 @@ class Building(db.Model):
 class Project(db.Model):
     __tablename__ = "projects"
     id = db.Column(db.Integer, primary_key=True)
-    summary = db.Column(db.String)
+    summary = db.Column(db.String(80))
+    budget = db.Column(db.Integer)
+    fees = db.relationship("Fee", backref="project_fees")

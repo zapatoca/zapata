@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="banner">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card header-text">
+          <div class="card-header">New Fee</div>
+          <div class="card-body">
+            <form method="POST" action="#">
+              <div class="form-group">
+                <label for="Apartment">Apartment #</label>
+                <input type="number" class="form-control" id="Apartment" name="Apartment" placeholder="Enter Apartment #">
+              </div>
+              <div class="form-group">
+                <label for="Fee_type">Type</label>
+                <select class="form-control" id="Fee_type" name="Fee_type">
+                  <option selected>Choose Fee Type</option>
+                  <option value="1">Ongoing</option>
+                  <option value="2">Project</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="Amount">Amount</label>
+                <input type="number" class="form-control" id="Amount" name="Amount" placeholder="Enter the Amount">
+              </div>
+              <div class="form-group">
+                <label for="project">Project</label>
+                <select class="form-control" id="project" name="project">
+                  <option selected>Choose Project</option>
+                  <option value="1">Claddings</option>
+                </select>
+              </div>
+              <input type="submit" id="submit" class="btn btn-success btn-lg btn-block login-button" value="Submit" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.1 (Debian 13.1-1.pgdg100+1)
--- Dumped by pg_dump version 13.1 (Debian 13.1-1.pgdg100+1)
+-- Dumped from database version 13.2 (Debian 13.2-1.pgdg100+1)
+-- Dumped by pg_dump version 13.2 (Debian 13.2-1.pgdg100+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -60,34 +60,19 @@ ALTER SEQUENCE public.buildings_id_seq OWNED BY public.buildings.id;
 --
 
 CREATE TABLE public.fees (
-    id integer NOT NULL,
-    yearly integer
+    id bigint,
+    "Apartment" bigint,
+    "Fee_type" text,
+    "Amount" bigint,
+    project bigint,
+    "Jan" bigint,
+    "Feb" bigint,
+    "Balance" bigint,
+    "Alert" boolean
 );
 
 
 ALTER TABLE public.fees OWNER TO zapata;
-
---
--- Name: fees_id_seq; Type: SEQUENCE; Schema: public; Owner: zapata
---
-
-CREATE SEQUENCE public.fees_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.fees_id_seq OWNER TO zapata;
-
---
--- Name: fees_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: zapata
---
-
-ALTER SEQUENCE public.fees_id_seq OWNED BY public.fees.id;
-
 
 --
 -- Name: incidents; Type: TABLE; Schema: public; Owner: zapata
@@ -129,7 +114,7 @@ ALTER SEQUENCE public.incidents_id_seq OWNED BY public.incidents.id;
 
 CREATE TABLE public.income (
     index bigint,
-    "Total" bigint,
+    "Amount" bigint,
     "Jan" bigint,
     "Feb" bigint,
     "Monthly" bigint,
@@ -146,7 +131,8 @@ ALTER TABLE public.income OWNER TO zapata;
 
 CREATE TABLE public.projects (
     id integer NOT NULL,
-    summary character varying
+    summary character varying(80),
+    budget integer
 );
 
 
@@ -182,13 +168,6 @@ ALTER TABLE ONLY public.buildings ALTER COLUMN id SET DEFAULT nextval('public.bu
 
 
 --
--- Name: fees id; Type: DEFAULT; Schema: public; Owner: zapata
---
-
-ALTER TABLE ONLY public.fees ALTER COLUMN id SET DEFAULT nextval('public.fees_id_seq'::regclass);
-
-
---
 -- Name: incidents id; Type: DEFAULT; Schema: public; Owner: zapata
 --
 
@@ -215,7 +194,26 @@ COPY public.buildings (id, address, flats) FROM stdin;
 -- Data for Name: fees; Type: TABLE DATA; Schema: public; Owner: zapata
 --
 
-COPY public.fees (id, yearly) FROM stdin;
+COPY public.fees (id, "Apartment", "Fee_type", "Amount", project, "Jan", "Feb", "Balance", "Alert") FROM stdin;
+1	1	2	4875	1	0	4875	0	f
+2	2	2	4875	1	0	4875	0	f
+3	3	2	3415	1	0	0	3415	t
+4	4	2	3415	1	0	0	3415	t
+5	5	2	3415	1	0	0	3415	t
+6	6	2	3415	1	0	0	3415	t
+7	7	2	3415	1	0	3415	0	f
+8	8	2	4060	1	0	0	4060	t
+9	9	2	4060	1	0	0	4060	t
+10	10	2	4390	1	0	4390	0	f
+11	11	2	4875	1	0	4875	0	f
+12	12	2	4875	1	0	0	4875	t
+13	13	2	4390	1	0	0	4390	t
+14	14	2	4875	1	0	4875	0	f
+15	15	2	4390	1	0	4390	0	f
+16	16	2	4875	1	0	4875	0	f
+17	17	2	4390	1	0	4390	0	f
+18	18	2	6500	1	0	6500	0	f
+19	19	2	6500	1	0	6500	0	f
 \.
 
 
@@ -239,14 +237,14 @@ COPY public.incidents (id, description) FROM stdin;
 -- Data for Name: income; Type: TABLE DATA; Schema: public; Owner: zapata
 --
 
-COPY public.income (index, "Total", "Jan", "Feb", "Monthly", "Balance", "Alert") FROM stdin;
+COPY public.income (index, "Amount", "Jan", "Feb", "Monthly", "Balance", "Alert") FROM stdin;
 1	5400	1350	0	450	4050	f
 2	5400	450	450	450	4500	f
 3	3780	3780	0	315	0	f
 4	3780	315	315	315	3150	f
 5	3780	945	0	315	2835	f
 6	3780	630	0	315	3150	f
-7	3780	315	0	315	3465	t
+7	3780	315	315	315	3150	f
 8	4500	2250	0	375	2250	f
 9	4500	1125	0	375	3375	f
 10	4860	1215	0	405	3645	f
@@ -266,8 +264,8 @@ COPY public.income (index, "Total", "Jan", "Feb", "Monthly", "Balance", "Alert")
 -- Data for Name: projects; Type: TABLE DATA; Schema: public; Owner: zapata
 --
 
-COPY public.projects (id, summary) FROM stdin;
-1	חיפויים
+COPY public.projects (id, summary, budget) FROM stdin;
+1	Claddings	85005
 \.
 
 
@@ -276,13 +274,6 @@ COPY public.projects (id, summary) FROM stdin;
 --
 
 SELECT pg_catalog.setval('public.buildings_id_seq', 1, true);
-
-
---
--- Name: fees_id_seq; Type: SEQUENCE SET; Schema: public; Owner: zapata
---
-
-SELECT pg_catalog.setval('public.fees_id_seq', 1, false);
 
 
 --
@@ -305,14 +296,6 @@ SELECT pg_catalog.setval('public.projects_id_seq', 1, true);
 
 ALTER TABLE ONLY public.buildings
     ADD CONSTRAINT buildings_pkey PRIMARY KEY (id);
-
-
---
--- Name: fees fees_pkey; Type: CONSTRAINT; Schema: public; Owner: zapata
---
-
-ALTER TABLE ONLY public.fees
-    ADD CONSTRAINT fees_pkey PRIMARY KEY (id);
 
 
 --
