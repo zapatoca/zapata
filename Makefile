@@ -40,6 +40,9 @@ functional-dependencies: geckodriver-v0.28.0-$(OS).tar.gz cleanup
 	mkdir geckodriver
 	tar -xzf geckodriver-v0.28.0-$(OS).tar.gz -C geckodriver
 	pip install -r tests/functional/requirements.txt
+	pip install -r zapata/app/requirements.txt
+
+
 
 coverage: dependencies coverage-dependencies
 	python3 -m pytest --cov=zapata --cov-fail-under=50 --cov-report term-missing tests/unit
