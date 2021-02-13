@@ -42,7 +42,7 @@ functional-dependencies: geckodriver-v0.28.0-$(OS).tar.gz cleanup
 	pip install -r tests/functional/requirements.txt
 
 coverage: dependencies coverage-dependencies
-	python3 -m pytest --cov=zapata --cov-fail-under=48 --cov-report term-missing tests/unit
+	python3 -m pytest --cov=zapata --cov-fail-under=50 --cov-report term-missing tests/unit
 
 functional: dependencies functional-dependencies up
 	python3 -m pytest --driver=Firefox --driver-path=geckodriver/geckodriver tests/functional

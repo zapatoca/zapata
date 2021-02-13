@@ -2,9 +2,11 @@
 
 from flask import Flask
 
+import models.fee  # noqa
 from database import db
-from models import *  # noqa
+from models_ import *  # noqa
 from router import router
+from routers.fees import fees_router
 
 app = Flask(
     __name__, template_folder="/app/templates", static_folder="/app/static"
@@ -17,6 +19,7 @@ app.config[
 db.init_app(app)
 
 app.register_blueprint(router)
+app.register_blueprint(fees_router)
 
 
 def main() -> None:
