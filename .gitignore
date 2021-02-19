@@ -10,3 +10,4 @@ Pipfile
 terraform.tfstate*
 *.gz
 .coverage
+.pytest_cache/*
