@@ -13,6 +13,18 @@ updates:
     allow:
       - dependency-type: all
   - package-ecosystem: pip
+    directory: /zapata/nginx
+    schedule:
+      interval: weekly
+    allow:
+      - dependency-type: all
+  - package-ecosystem: pip
+    directory: /zapata/certbot
+    schedule:
+      interval: weekly
+    allow:
+      - dependency-type: all
+  - package-ecosystem: pip
     directory: /tests
     schedule:
       interval: weekly

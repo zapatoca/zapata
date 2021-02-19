@@ -4,29 +4,9 @@
 
 ## Spin DEV environment
 
-* Run: `vagrant up dev`<br>
-* Zapata - http://localhost:5000
-
-Or
-
-* Run: `terraform apply -auto-approve`
-
+- Run: `make zapata`<br>
+- Browse: http://localhost:5000
 
 ## Teardown DEV environment
 
-* Run: `vagrant destroy -f dev`
-
-Or
-
-* Run: `terraform destroy -auto-approve`
-
-
-## Spin STAGE environment
-
-* Run: `vagrant up stage`<br>
-* Zapata - http://\<public ip\>:5000
-
-
-## Teardown STAGE environment
-
-* Run: `vagrant destroy -f stage`
+- Run: `make clean`

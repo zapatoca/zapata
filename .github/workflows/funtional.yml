@@ -14,11 +14,6 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.9
-      - name: Spin
-        run: |
-          export HOME="${GITHUB_WORKSPACE}"
-          docker-compose up --build -d
       - name: Test
         run: |
-          export HOME="${GITHUB_WORKSPACE}"
           make functional

@@ -1,5 +1,4 @@
 import os
-import time
 
 import pytest
 
@@ -17,12 +16,3 @@ def env_setup(monkeypatch):
     else:
         guest_home = "/Users/liora/repos/github.com/lioramilbaum/zapata"
     monkeypatch.setenv("GUEST_HOME", guest_home)
-
-
-@pytest.fixture
-def init_db():
-    if os.getenv("GITHUB_ACTIONS"):
-        time.sleep(30)
-        os.system(
-            "docker exec -t db psql -U zapata -d zapata -f /tmp/dump.sql"
-        )
