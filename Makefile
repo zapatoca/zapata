@@ -1,4 +1,5 @@
-.PHONY: functional-dependencies functional up destroy cleanup test coverage coverage-dependencies dependencies
+.PHONY: functional-dependencies coverage-dependencies dependencies  up destroy \
+	test functional coverage clean build zapata sidecar
 .EXPORT_ALL_VARIABLES:
 
 UNAME := $(shell uname)
@@ -36,22 +37,30 @@ coverage-dependencies:
 	pip install -r zapata/app/requirements.txt
 	pip install -r zapata/reminders/requirements.txt
 
-functional-dependencies: geckodriver-v0.28.0-$(OS).tar.gz cleanup
+functional-dependencies: geckodriver-v0.28.0-$(OS).tar.gz
 	mkdir geckodriver
 	tar -xzf geckodriver-v0.28.0-$(OS).tar.gz -C geckodriver
 	pip install -r tests/functional/requirements.txt
 	pip install -r zapata/app/requirements.txt
 
-
-
 coverage: dependencies coverage-dependencies
 	python3 -m pytest --cov=zapata --cov-fail-under=50 --cov-report term-missing tests/unit
 
-functional: dependencies functional-dependencies up
+functional: dependencies functional-dependencies zapata
 	python3 -m pytest --driver=Firefox --driver-path=geckodriver/geckodriver tests/functional
 
-test: functional
-	make destroy cleanup
+test: functional coverage
 
-cleanup:
+clean:
 	rm -rf geckodriver
+	docker-compose down
+
+build:
+	docker-compose -f sidecar-compose.yml -f docker-compose.yml build
+
+sidecar: build
+	docker-compose -f sidecar-compose.yml run --rm certbot
+
+zapata: build sidecar
+	export HOME=. && docker-compose up -d
+	docker-compose exec -T db psql -U zapata -d zapata -f /tmp/dump.sql

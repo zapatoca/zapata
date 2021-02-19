@@ -2,7 +2,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 
-def test_rows_number(init_db):
+def test_rows_number():
     SQLALCHEMY_DATABASE_URL = (
         "postgresql://zapata:zapata@localhost:5432/zapata"
     )

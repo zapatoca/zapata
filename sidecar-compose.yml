@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  certbot:
+    image: certbot:1
+    container_name: certbot
+    build:
+      context: ./zapata/certbot
+      dockerfile: Dockerfile
+    volumes:
+      - certs:/etc/letsencrypt
+      - www:/var/www/certbot
+    restart: always
+
+volumes:
+  certs:
+    name: certs
+  www:
+    name: www

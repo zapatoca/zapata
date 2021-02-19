@@ -8,9 +8,7 @@ from models_ import *  # noqa
 from router import router
 from routers.fees import fees_router
 
-app = Flask(
-    __name__, template_folder="/app/templates", static_folder="/app/static"
-)
+app = Flask(__name__, template_folder="/templates", static_folder="/static")
 app.secret_key = "secret123"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config[
@@ -25,7 +23,7 @@ app.register_blueprint(fees_router)
 def main() -> None:
     # with app.app_context():
     #     db.create_all()
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0", port=3000)
 
 
 if __name__ == "__main__":
