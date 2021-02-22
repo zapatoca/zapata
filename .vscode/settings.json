@@ -1,0 +1,28 @@
+{
+    "python.linting.pylintPath": "~/.virtualenvs/zapata/bin/pylint",
+    "python.pythonPath": "~/.virtualenvs/zapata/bin/python",
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        80,
+    ],
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.insertSpaces": false,
+    "editor.renderWhitespace": "all",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length",
+        "79"
+    ],
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_flask_sqlalchemy",
+        "pylint_flask",
+    ]
+}
