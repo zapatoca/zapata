@@ -1,4 +1,4 @@
-.PHONY: functional-dependencies coverage-dependencies dependencies  up destroy \
+.PHONY: functional-dependencies coverage-dependencies dependencies up down \
 	test functional coverage clean build zapata sidecar
 .EXPORT_ALL_VARIABLES:
 
@@ -14,16 +14,6 @@ endif
 AWS_ACCESS_KEY_ID     := $(shell awscliv2 configure get aws_access_key_id)
 AWS_SECRET_ACCESS_KEY := $(shell awscliv2 configure get aws_secret_access_key)
 AWS_DEFAULT_REGION    := $(shell awscliv2 configure get region)
-
-up:
-ifeq ($(UNAME), Darwin)
-	vagrant up dev
-endif
-
-destroy:
-ifeq ($(UNAME), Darwin)
-	vagrant destroy -f dev
-endif
 
 geckodriver-v0.28.0-$(OS).tar.gz:
 	wget https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-$(OS).tar.gz
@@ -53,7 +43,11 @@ test: functional coverage
 
 clean:
 	rm -rf geckodriver
-	docker-compose down
+	docker-compose -f sidecar-compose.yml -f docker-compose.yml down --rmi all
+	docker volume rm $$(docker volume ls -q)
+
+down:
+	docker-compose -f sidecar-compose.yml -f docker-compose.yml down
 
 build:
 	docker-compose -f sidecar-compose.yml -f docker-compose.yml build
@@ -61,6 +55,6 @@ build:
 sidecar: build
 	docker-compose -f sidecar-compose.yml run --rm certbot
 
-zapata: build sidecar
+up: build sidecar
 	export HOME=. && docker-compose up -d
 	docker-compose exec -T db psql -U zapata -d zapata -f /tmp/dump.sql

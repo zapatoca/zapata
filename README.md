@@ -4,9 +4,9 @@
 
 ## Spin DEV environment
 
-- Run: `make zapata`<br>
+- Run: `make up`<br>
 - Browse: http://localhost:5000
 
 ## Teardown DEV environment
 
-- Run: `make clean`
+- Run: `make down`
