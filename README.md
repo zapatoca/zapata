@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/larisafaingold/zapata)
+
 ![Python application](https://github.com/zapatoca/zapata/workflows/Python%20application/badge.svg)
 
 # zapata
