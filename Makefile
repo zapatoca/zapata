@@ -11,9 +11,9 @@ ifeq ($(UNAME), Darwin)
 	OS := macos
 endif
 
-AWS_ACCESS_KEY_ID     := $(shell awscliv2 configure get aws_access_key_id)
-AWS_SECRET_ACCESS_KEY := $(shell awscliv2 configure get aws_secret_access_key)
-AWS_DEFAULT_REGION    := $(shell awscliv2 configure get region)
+AWS_ACCESS_KEY_ID     := $(shell aws configure get aws_access_key_id)
+AWS_SECRET_ACCESS_KEY := $(shell aws configure get aws_secret_access_key)
+AWS_DEFAULT_REGION    := $(shell aws configure get region)
 
 geckodriver-v0.28.0-$(OS).tar.gz:
 	wget https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-$(OS).tar.gz
@@ -57,4 +57,5 @@ sidecar: build
 
 up: build sidecar
 	export HOME=. && docker-compose up -d
+	sleep 10
 	docker-compose exec -T db psql -U zapata -d zapata -f /tmp/dump.sql

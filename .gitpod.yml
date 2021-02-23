@@ -2,4 +2,19 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: make
+  - command: sudo docker-up
+  - command: sleep 10 && make up
+
+ports:
+  - port: 5000
+    onOpen: open-browser
+    visibility: private
+  - port: 3000
+    onOpen: ignore
+    visibility: private
+  - port: 8443
+    onOpen: ignore
+    visibility: private
+  - port: 5432
+    onOpen: ignore
+    visibility: private
