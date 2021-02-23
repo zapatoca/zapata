@@ -1,5 +1,5 @@
 .PHONY: functional-dependencies coverage-dependencies dependencies up down \
-	test functional coverage clean build zapata sidecar
+	test functional coverage clean build sidecar
 .EXPORT_ALL_VARIABLES:
 
 UNAME := $(shell uname)
@@ -36,7 +36,7 @@ functional-dependencies: geckodriver-v0.28.0-$(OS).tar.gz
 coverage: dependencies coverage-dependencies
 	python3 -m pytest --cov=zapata --cov-fail-under=50 --cov-report term-missing tests/unit
 
-functional: dependencies functional-dependencies zapata
+functional: dependencies functional-dependencies up
 	python3 -m pytest --driver=Firefox --driver-path=geckodriver/geckodriver tests/functional
 
 test: functional coverage
