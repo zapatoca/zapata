@@ -14,6 +14,7 @@ class Fee(db.Model):
     )
     Jan = db.Column(db.Integer, nullable=False)
     Feb = db.Column(db.Integer, nullable=False)
+    Mar = db.Column(db.Integer, nullable=False)
     Balance = db.Column(db.Integer, nullable=False)
     Alert = db.Column(db.Boolean, nullable=False)
 
@@ -24,5 +25,6 @@ class Fee(db.Model):
         self.project = project
         self.Jan = 0
         self.Feb = 0
+        self.Mar = 0
         self.Balance = 0
         self.Alert = True

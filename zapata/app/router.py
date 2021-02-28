@@ -16,17 +16,17 @@ def _index() -> str:
     with db.engine.begin() as conn:
         df = pd.read_sql_table("income", conn)
         df["Monthly"] = (df["Amount"] / 12).astype(int)
-        df["Balance"] = df["Amount"] - sum([df["Jan"], df["Feb"]])
+        df["Balance"] = df["Amount"] - sum([df["Jan"], df["Feb"], df["Mar"]])
 
         currentMonth = datetime.now().month
         df["Alert"] = currentMonth * df["Monthly"] > sum(
-            [df["Jan"], df["Feb"]]
+            [df["Jan"], df["Feb"], df["Mar"]]
         )
 
         df.to_sql("income", con=conn, if_exists="replace", index=False)
 
         df = pd.read_sql_table("fees", conn)
-        df["Balance"] = df["Amount"] - sum([df["Jan"], df["Feb"]])
+        df["Balance"] = df["Amount"] - sum([df["Jan"], df["Feb"], df["Mar"]])
 
         currentMonth = datetime.now().month
         df["Alert"] = df["Balance"] != 0

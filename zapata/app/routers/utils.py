@@ -21,7 +21,7 @@ def render(df, name) -> str:
     ]
 
     if name == "income":
-        df = df[["Amount", "Monthly", "Jan", "Feb", "Balance", "Alert"]]
+        df = df[["Amount", "Monthly", "Jan", "Feb", "Mar", "Balance", "Alert"]]
 
         return (
             df.style.hide_columns(["Alert"])
@@ -37,7 +37,7 @@ def render(df, name) -> str:
             .render()
         )
     elif name == "fees":
-        df = df[["Amount", "Jan", "Feb", "Balance", "Alert"]]
+        df = df[["Amount", "Jan", "Feb", "Mar", "Balance", "Alert"]]
         return (
             df.style.hide_columns(["Alert"])
             .set_properties(
