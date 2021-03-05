@@ -7,13 +7,13 @@ tasks:
 
 ports:
   - port: 5000
-    onOpen: open-browser
+    onOpen: ignore
     visibility: private
   - port: 3000
     onOpen: ignore
     visibility: private
   - port: 8443
-    onOpen: ignore
+    onOpen: open-browser
     visibility: private
   - port: 5432
     onOpen: ignore

@@ -1,5 +1,5 @@
-.PHONY: functional-dependencies coverage-dependencies dependencies up down \
-	test functional coverage clean build sidecar
+.PHONY: test-dependencies dependencies up down test functional unit clean \
+	build
 .EXPORT_ALL_VARIABLES:
 
 UNAME := $(shell uname)
@@ -20,42 +20,34 @@ geckodriver-v0.28.0-$(OS).tar.gz:
 
 dependencies:
 	pip install --upgrade pip
-	pip install -r tests/requirements.txt
-
-coverage-dependencies:
-	pip install -r tests/unit/requirements.txt
 	pip install -r zapata/app/requirements.txt
 	pip install -r zapata/reminders/requirements.txt
 
-functional-dependencies: geckodriver-v0.28.0-$(OS).tar.gz
-	mkdir geckodriver
+test-dependencies: geckodriver-v0.28.0-$(OS).tar.gz
+	-mkdir geckodriver
 	tar -xzf geckodriver-v0.28.0-$(OS).tar.gz -C geckodriver
-	pip install -r tests/functional/requirements.txt
-	pip install -r zapata/app/requirements.txt
+	pip install -r tests/requirements.txt
 
-coverage: dependencies coverage-dependencies
-	python3 -m pytest --cov=zapata --cov-fail-under=50 --cov-report term-missing tests/unit
+unit: dependencies test-dependencies
+	python3 -m pytest --cov=zapata --cov-fail-under=52 --cov-report term-missing tests/unit
 
-functional: dependencies functional-dependencies up
+functional: dependencies test-dependencies up
 	python3 -m pytest --driver=Firefox --driver-path=geckodriver/geckodriver tests/functional
 
-test: functional coverage
+test: functional unit
 
 clean:
 	rm -rf geckodriver
-	docker-compose -f sidecar-compose.yml -f docker-compose.yml down --rmi all
+	docker-compose down --rmi all
 	docker volume rm $$(docker volume ls -q)
 
 down:
-	docker-compose -f sidecar-compose.yml -f docker-compose.yml down
+	docker-compose down
 
 build:
-	docker-compose -f sidecar-compose.yml -f docker-compose.yml build
+	docker-compose build
 
-sidecar: build
-	docker-compose -f sidecar-compose.yml run --rm certbot
-
-up: build sidecar
+up: build
 	export HOME=. && docker-compose up -d
 	sleep 10
 	docker-compose exec -T db psql -U zapata -d zapata -f /tmp/dump.sql

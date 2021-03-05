@@ -7,6 +7,7 @@ from database import db
 from models_ import *  # noqa
 from router import router
 from routers.fees import fees_router
+from routers.index import index_router
 
 app = Flask(__name__, template_folder="/templates", static_folder="/static")
 app.secret_key = "secret123"
@@ -17,6 +18,7 @@ app.config[
 db.init_app(app)
 
 app.register_blueprint(router)
+app.register_blueprint(index_router)
 app.register_blueprint(fees_router)
 
 
