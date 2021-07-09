@@ -1,38 +1,38 @@
 version: 2
 updates:
-  - package-ecosystem: pip
-    directory: /zapata/app
-    schedule:
-      interval: weekly
-    allow:
-      - dependency-type: all
-  - package-ecosystem: pip
-    directory: /zapata/reminders
-    schedule:
-      interval: weekly
-    allow:
-      - dependency-type: all
-  - package-ecosystem: pip
-    directory: /zapata/nginx
-    schedule:
-      interval: weekly
-    allow:
-      - dependency-type: all
-  - package-ecosystem: pip
-    directory: /zapata/certbot
-    schedule:
-      interval: weekly
-    allow:
-      - dependency-type: all
-  - package-ecosystem: pip
-    directory: /tests
-    schedule:
-      interval: weekly
-    allow:
-      - dependency-type: all
-  - package-ecosystem: composer
-    directory: /
-    schedule:
-      interval: weekly
-    allow:
-      - dependency-type: all
+  # - package-ecosystem: pip
+  #   directory: /zapata/app
+  #   schedule:
+  #     interval: weekly
+  #   allow:
+  #     - dependency-type: all
+  # - package-ecosystem: pip
+  #   directory: /zapata/reminders
+  #   schedule:
+  #     interval: weekly
+  #   allow:
+  #     - dependency-type: all
+  # - package-ecosystem: pip
+  #   directory: /zapata/nginx
+  #   schedule:
+  #     interval: weekly
+  #   allow:
+  #     - dependency-type: all
+  # - package-ecosystem: pip
+  #   directory: /zapata/certbot
+  #   schedule:
+  #     interval: weekly
+  #   allow:
+  #     - dependency-type: all
+  # - package-ecosystem: pip
+  #   directory: /tests
+  #   schedule:
+  #     interval: weekly
+  #   allow:
+  #     - dependency-type: all
+  # - package-ecosystem: composer
+  #   directory: /
+  #   schedule:
+  #     interval: weekly
+  #   allow:
+  #     - dependency-type: all
